@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 var robados = [];
 var url = 'http://www.unap.edu.pe/cidiomas/index.php?i=0&z=1&pag=recordar_pas&m=1';
 const desde = 140000;
-const hasta = 140010;
+const hasta = 150000;
 
 var consultasRestantes = hasta-desde+1;
 
@@ -47,6 +47,11 @@ function robar(){
 function comprobarFinalizacion(){
   console.log('restantes=',consultasRestantes);
   if(consultasRestantes==0){ 
+    robados.sort(function(a,b){
+        if(a.codigo>b.codigo) return 1;
+        if(b.codigo>a.codigo) return -1;
+        return 0;
+    })
     fs.writeFile('codigos.json', JSON.stringify(robados), function(err){
       console.log('Archivo escrito correctamente! - verifique el archivo codigos.json');
     })
