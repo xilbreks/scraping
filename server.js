@@ -42,12 +42,9 @@ function robar(){
 }
 
 function comprobarFinalizacion(){
+  console.log('restantes=',consultasRestantes);
   if(consultasRestantes==0){
-    robados.sort(function(a,b){
-      if(a.codigo>b.codigo) return 1;
-      if(a.codigo<b.codigo) return -1;
-      return 0;
-    });
+    
     fs.writeFile('codigos.json', JSON.stringify(robados), function(err){
       console.log('Archivo escrito correctamente! - verifique el archivo codigos.json');
     })
